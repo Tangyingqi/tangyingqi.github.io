@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next pisces use-motion" lang="">
+<html class="theme-next pisces use-motion" lang="zh-Hans">
 <head>
   <meta charset="UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=edge" />
@@ -84,9 +84,9 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="HeadFirst设计模式笔记-组合模式">
 <meta property="og:url" content="http://yoursite.com/2015/12/14/HeadFirst设计模式笔记-组合模式/index.html">
-<meta property="og:site_name" content="Hexo">
+<meta property="og:site_name" content="Tangyingqi&#39;s Blog">
 <meta property="og:description" content="什么是组合模式定义：组合模式允许你将对象组合成树形结构来表现“整体/部分”层次结构。组合能让客户以一致的方式处理个别对象以及个别对象组合。 简单的说，组合模式就是一个树形结构，根节点就是一个通用的接口，这个接口可以定义一些通用方法。下面是子节点，子节点还可以有自己的子节点。所有节点都实现同一接口。就像一个文件夹里面有文件也有其他文件夹。    主要解决：它在我们树形结构问题中，模糊了简单元素和复杂">
-<meta property="og:locale" content="default">
+<meta property="og:locale" content="zh-Hans">
 <meta property="og:image" content="http://i4.tietuku.com/65c621d1920514d6.png">
 <meta property="og:image" content="http://i4.tietuku.com/f5e1a2e80880b832.png">
 <meta property="og:updated_time" content="2018-09-09T13:32:20.000Z">
@@ -109,7 +109,7 @@
     motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
     duoshuo: {
       userId: '0',
-      author: 'Author'
+      author: '博主'
     },
     algolia: {
       applicationID: '',
@@ -129,7 +129,7 @@
 
 
 
-  <title>HeadFirst设计模式笔记-组合模式 | Hexo</title>
+  <title>HeadFirst设计模式笔记-组合模式 | Tangyingqi's Blog</title>
   
 
 
@@ -141,7 +141,7 @@
 
 </head>
 
-<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
 
   
   
@@ -159,7 +159,7 @@
     <div class="custom-logo-site-title">
       <a href="/"  class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">Tangyingqi's Blog</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -189,7 +189,27 @@
             
               <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
             
-            Home
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br />
+            
+            标签
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br />
+            
+            分类
           </a>
         </li>
       
@@ -199,7 +219,17 @@
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
             
-            Archives
+            归档
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
           </a>
         </li>
       
@@ -239,13 +269,13 @@
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/12/14/HeadFirst设计模式笔记-组合模式/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="Tangyingqi">
       <meta itemprop="description" content="">
       <meta itemprop="image" content="/images/avatar.gif">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="Tangyingqi's Blog">
     </span>
 
     
@@ -263,9 +293,9 @@
                 <i class="fa fa-calendar-o"></i>
               </span>
               
-                <span class="post-meta-item-text">Posted on</span>
+                <span class="post-meta-item-text">发表于</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-14T22:10:40+08:00">
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2015-12-14T22:10:40+08:00">
                 2015-12-14
               </time>
             
@@ -284,7 +314,7 @@
                 <i class="fa fa-folder-o"></i>
               </span>
               
-                <span class="post-meta-item-text">In</span>
+                <span class="post-meta-item-text">分类于</span>
               
               
                 <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
@@ -506,10 +536,10 @@ My name is 小李 i am a worker
       
         <ul class="sidebar-nav motion-element">
           <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
+            文章目录
           </li>
           <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
+            站点概览
           </li>
         </ul>
       
@@ -518,7 +548,7 @@ My name is 小李 i am a worker
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-author-name" itemprop="name">Tangyingqi</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -530,7 +560,7 @@ My name is 小李 i am a worker
                 <a href="/archives/">
               
                   <span class="site-state-item-count">23</span>
-                  <span class="site-state-item-name">posts</span>
+                  <span class="site-state-item-name">日志</span>
                 </a>
               </div>
             
@@ -541,7 +571,7 @@ My name is 小李 i am a worker
               <div class="site-state-item site-state-categories">
                 
                   <span class="site-state-item-count">4</span>
-                  <span class="site-state-item-name">categories</span>
+                  <span class="site-state-item-name">分类</span>
                 
               </div>
             
@@ -552,7 +582,7 @@ My name is 小李 i am a worker
               <div class="site-state-item site-state-tags">
                 
                   <span class="site-state-item-count">12</span>
-                  <span class="site-state-item-name">tags</span>
+                  <span class="site-state-item-name">标签</span>
                 
               </div>
             
@@ -608,13 +638,13 @@ My name is 小李 i am a worker
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">Tangyingqi</span>
 
   
 </div>
 
 
-  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
 
 
 
@@ -622,7 +652,7 @@ My name is 小李 i am a worker
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
 
 
 
