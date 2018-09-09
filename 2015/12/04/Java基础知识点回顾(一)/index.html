@@ -1,0 +1,772 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="java基础," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.成员变量和局部变量的区别局部变量在一个方法里，必须有初始化值，作用域在方法块内。而成员变量在不需要初始化，作用域在整个类。 2.static关键字的含义static可以修饰方法，属性，自由块和内部类。使用static修饰这些成员可以理解成这些成员与类有关，通过“类名.成员”调用，没有static的可以理解成成员与对象相关，需要通过“对象.成员”调用。当static修饰属性时，该属性被多个当前类">
+<meta name="keywords" content="java基础">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java基础知识点回顾(一)">
+<meta property="og:url" content="http://yoursite.com/2015/12/04/Java基础知识点回顾(一)/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="1.成员变量和局部变量的区别局部变量在一个方法里，必须有初始化值，作用域在方法块内。而成员变量在不需要初始化，作用域在整个类。 2.static关键字的含义static可以修饰方法，属性，自由块和内部类。使用static修饰这些成员可以理解成这些成员与类有关，通过“类名.成员”调用，没有static的可以理解成成员与对象相关，需要通过“对象.成员”调用。当static修饰属性时，该属性被多个当前类">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-09T13:32:55.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Java基础知识点回顾(一)">
+<meta name="twitter:description" content="1.成员变量和局部变量的区别局部变量在一个方法里，必须有初始化值，作用域在方法块内。而成员变量在不需要初始化，作用域在整个类。 2.static关键字的含义static可以修饰方法，属性，自由块和内部类。使用static修饰这些成员可以理解成这些成员与类有关，通过“类名.成员”调用，没有static的可以理解成成员与对象相关，需要通过“对象.成员”调用。当static修饰属性时，该属性被多个当前类">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/12/04/Java基础知识点回顾(一)/"/>
+
+
+
+
+
+  <title>Java基础知识点回顾(一) | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/12/04/Java基础知识点回顾(一)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Java基础知识点回顾(一)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-04T20:02:46+08:00">
+                2015-12-04
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/java/" itemprop="url" rel="index">
+                    <span itemprop="name">java</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="1-成员变量和局部变量的区别"><a href="#1-成员变量和局部变量的区别" class="headerlink" title="1.成员变量和局部变量的区别"></a>1.成员变量和局部变量的区别</h3><p>局部变量在一个方法里，必须有初始化值，作用域在方法块内。而成员变量在不需要初始化，作用域在整个类。</p>
+<h3 id="2-static关键字的含义"><a href="#2-static关键字的含义" class="headerlink" title="2.static关键字的含义"></a>2.static关键字的含义</h3><p>static可以修饰方法，属性，自由块和内部类。使用static修饰这些成员可以理解成这些成员与类有关，通过“类名.成员”调用，没有static的可以理解成成员与对象相关，需要通过“对象.成员”调用。<br>当static修饰属性时，该属性被多个当前类对象调用，一个对象修改静态属性值后，会影响其他对象。<br>static修饰自由块时，自由块将变成静态自由块，通常用于初始化静态变量。静态自由块只执行一次。</p>
+<h3 id="3-变量之间值传递和引用传递的区别"><a href="#3-变量之间值传递和引用传递的区别" class="headerlink" title="3.变量之间值传递和引用传递的区别"></a>3.变量之间值传递和引用传递的区别</h3><ul>
+<li>存储机制：简单类型变量是直接在栈内存中开辟存储空间存储变量值。引用类型变量是在引用空间和存储空间两部分构成，引用空间在栈内存中，存储空间在堆内存中，存储空间负责存储变量值，引用空间负责存放存储空间的首地址。</li>
+<li>变量传递：引用变量和简单变量都属于值传递，不同的是简单变量传递内容本身，引用变量传递的是引用地址。</li>
+</ul>
+<h3 id="4-x-y和x-x-y区别，-amp-和-amp-amp-的区别"><a href="#4-x-y和x-x-y区别，-amp-和-amp-amp-的区别" class="headerlink" title="4.x+=y和x=x+y区别，&amp;和&amp;&amp;的区别"></a>4.x+=y和x=x+y区别，&amp;和&amp;&amp;的区别</h3><ul>
+<li>+=会自动根据接收变量的类型进行类型的强制转换。</li>
+<li>&amp;&amp;的效率更高，当它发现有false就会停止计算，返回false，而&amp;是每个操作数要参与运算。</li>
+</ul>
+<h3 id="5-和equals-的区别"><a href="#5-和equals-的区别" class="headerlink" title="5.==和equals()的区别"></a>5.==和equals()的区别</h3><ul>
+<li>==用于判断两个简单变量的值是否相等，或两个引用变量的引用地址是否相等。</li>
+<li>equals()是用于判断引用变量引用地址的存储内容是否相等。</li>
+</ul>
+<p>举个例子：</p>
+<pre><code>int a=1;
+int b=1;
+system.out.print(a==b);
+String c = new String(&quot;tang&quot;);
+String d = new String(&quot;tang&quot;);
+System.out.print(c==d);
+System.out.print(c.equals(d));
+
+true
+false
+true
+</code></pre><h3 id="6-抽象类是什么？"><a href="#6-抽象类是什么？" class="headerlink" title="6.抽象类是什么？"></a>6.抽象类是什么？</h3><p>有些类的方法无法确定具体的实现方式，这是可以将该类定义为抽象类。无法具体实现的方法定义成抽象方法。     </p>
+<p>注意：</p>
+<ul>
+<li>抽象类不能实例化，即不能创建对象，只能作为父类用于被继承。</li>
+<li>子类继承一个抽象类后，必须要实现父类中的所有抽象方法，否则子类也要定义为抽象类。</li>
+<li>抽象类中可以包含抽象方法，也可以不包含抽象方法。</li>
+<li>如果类中包含抽象方法，那么类必须定义为抽象类。</li>
+</ul>
+<h3 id="7-接口是什么？"><a href="#7-接口是什么？" class="headerlink" title="7.接口是什么？"></a>7.接口是什么？</h3><p>接口是方法声明和常量值定义的集合    </p>
+<p>注意:</p>
+<ul>
+<li>接口只包含方法声明和常量定义，即使定义普通属性，该属性在编译后也将变成常量。</li>
+<li>当其他类实现该接口时，接口中所有方法都要求全部实现，否则定义成抽象类。</li>
+<li>一个类可以实现多个接口。一个接口可以多继承。</li>
+</ul>
+<h3 id="8-多态是什么，有什么好处？"><a href="#8-多态是什么，有什么好处？" class="headerlink" title="8.多态是什么，有什么好处？"></a>8.多态是什么，有什么好处？</h3><p>一个父类在某些地方可以代表子类，因此这个父类具有多态性。<br>多态使程序更加灵活，例如ArrayList类中，add方法，参数类型为object，因此可以传递任意类的对象。</p>
+<h3 id="9-抽象类和接口的区别"><a href="#9-抽象类和接口的区别" class="headerlink" title="9.抽象类和接口的区别"></a>9.抽象类和接口的区别</h3><ul>
+<li>抽象类不能实例化，抽象类既可以包含以实现的方法，也可以包含方法的定义，不具体实现。</li>
+<li>接口只包含常量定义和方法定义，接口本身也是一种特殊的抽象类。</li>
+<li>抽象类通过继承使用，接口通过实现使用。</li>
+<li>抽象类允许实现一个或多个接口</li>
+</ul>
+<h3 id="10-属性、方法、构造方法、和自由块的调用顺序"><a href="#10-属性、方法、构造方法、和自由块的调用顺序" class="headerlink" title="10.属性、方法、构造方法、和自由块的调用顺序"></a>10.属性、方法、构造方法、和自由块的调用顺序</h3><ul>
+<li>父类静态成员和静态初始化块，按在代码中顺序    </li>
+<li>子类静态成员和静态初始化块，按在代码中顺序。    </li>
+<li>父类实例成员和实例初始化块，按在代码中顺序。    </li>
+<li>父类构造方法。    </li>
+<li>子类实例成员和实例初始化块，按在代码中顺序。</li>
+<li>子类构造方法。</li>
+</ul>
+<h3 id="11-静态初始化块和非静态初始化块的区别。"><a href="#11-静态初始化块和非静态初始化块的区别。" class="headerlink" title="11.静态初始化块和非静态初始化块的区别。"></a>11.静态初始化块和非静态初始化块的区别。</h3><ul>
+<li>非静态初始化块用来初始化一些数据，每次创建对象都调用。</li>
+<li>静态初始化块用来初始化静态数据，不管创造多少对象都只调用一次。</li>
+</ul>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/java基础/" rel="tag"># java基础</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/30/怎样做一个新闻客户端/" rel="next" title="怎样做一个新闻客户端">
+                <i class="fa fa-chevron-left"></i> 怎样做一个新闻客户端
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/04/HeadFirst设计模式笔记-策略模式/" rel="prev" title="HeadFirst设计模式笔记-策略模式">
+                HeadFirst设计模式笔记-策略模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-成员变量和局部变量的区别"><span class="nav-number">1.</span> <span class="nav-text">1.成员变量和局部变量的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-static关键字的含义"><span class="nav-number">2.</span> <span class="nav-text">2.static关键字的含义</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-变量之间值传递和引用传递的区别"><span class="nav-number">3.</span> <span class="nav-text">3.变量之间值传递和引用传递的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4-x-y和x-x-y区别，-amp-和-amp-amp-的区别"><span class="nav-number">4.</span> <span class="nav-text">4.x+=y和x=x+y区别，&amp;和&amp;&amp;的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#5-和equals-的区别"><span class="nav-number">5.</span> <span class="nav-text">5.==和equals()的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#6-抽象类是什么？"><span class="nav-number">6.</span> <span class="nav-text">6.抽象类是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#7-接口是什么？"><span class="nav-number">7.</span> <span class="nav-text">7.接口是什么？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#8-多态是什么，有什么好处？"><span class="nav-number">8.</span> <span class="nav-text">8.多态是什么，有什么好处？</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#9-抽象类和接口的区别"><span class="nav-number">9.</span> <span class="nav-text">9.抽象类和接口的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#10-属性、方法、构造方法、和自由块的调用顺序"><span class="nav-number">10.</span> <span class="nav-text">10.属性、方法、构造方法、和自由块的调用顺序</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#11-静态初始化块和非静态初始化块的区别。"><span class="nav-number">11.</span> <span class="nav-text">11.静态初始化块和非静态初始化块的区别。</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

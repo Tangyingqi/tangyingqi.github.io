@@ -1,0 +1,909 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="Design," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="这篇写写现在非常流行的 Toolbar + DrawerLayout。符合 Android Material Design。实现以后是这样的。     # ToolBar首先为了代码看起来简洁，在 layout 里面新建 toolbar.xml   &amp;lt;LinearLayout xmlns:android=&amp;quot;http://schemas.android.com/apk/res/and">
+<meta name="keywords" content="Design">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Toolbar + DrawerLayout">
+<meta property="og:url" content="http://yoursite.com/2015/11/13/Toolbar + DrawerLayout/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="这篇写写现在非常流行的 Toolbar + DrawerLayout。符合 Android Material Design。实现以后是这样的。     # ToolBar首先为了代码看起来简洁，在 layout 里面新建 toolbar.xml   &amp;lt;LinearLayout xmlns:android=&amp;quot;http://schemas.android.com/apk/res/and">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://i12.tietuku.com/01a5309c02f8c7d7.png">
+<meta property="og:updated_time" content="2018-09-09T13:33:36.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Toolbar + DrawerLayout">
+<meta name="twitter:description" content="这篇写写现在非常流行的 Toolbar + DrawerLayout。符合 Android Material Design。实现以后是这样的。     # ToolBar首先为了代码看起来简洁，在 layout 里面新建 toolbar.xml   &amp;lt;LinearLayout xmlns:android=&amp;quot;http://schemas.android.com/apk/res/and">
+<meta name="twitter:image" content="http://i12.tietuku.com/01a5309c02f8c7d7.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/11/13/Toolbar + DrawerLayout/"/>
+
+
+
+
+
+  <title>Toolbar + DrawerLayout | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/11/13/Toolbar + DrawerLayout/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Toolbar + DrawerLayout</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-11-13T21:23:14+08:00">
+                2015-11-13
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>这篇写写现在非常流行的 Toolbar + DrawerLayout。符合 Android Material Design。实现以后是这样的。<br><img src="http://i12.tietuku.com/01a5309c02f8c7d7.png" alt="drawerlayout">    </p>
+<h3 id="ToolBar"><a href="#ToolBar" class="headerlink" title="# ToolBar"></a># ToolBar</h3><p>首先为了代码看起来简洁，在 layout 里面新建 toolbar.xml  </p>
+<pre><code>&lt;LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+android:orientation=&quot;vertical&quot; android:layout_width=&quot;match_parent&quot;
+android:layout_height=&quot;match_parent&quot;&gt;
+
+&lt;android.support.v7.widget.Toolbar
+    android:id=&quot;@+id/toolbar&quot;
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;wrap_content&quot;
+    android:background=&quot;?attr/colorPrimary&quot;
+    android:minHeight=&quot;?attr/actionBarSize&quot;
+    android:popupTheme=&quot;@style/ThemeOverlay.AppCompat.Light&quot;
+    app:theme=&quot;@style/ThemeOverlay.AppCompat.Dark.ActionBar&quot;
+    &gt;
+
+&lt;/android.support.v7.widget.Toolbar&gt;
+&lt;/LinearLayout&gt;
+</code></pre><p>app 是自定义的，为 toolbar 定义自己的主题，目的是让 Toolbar 上的标题和其他显示为白色。</p>
+<h3 id="DrawerLayout"><a href="#DrawerLayout" class="headerlink" title="# DrawerLayout"></a># DrawerLayout</h3><p>同样我们也在 layout 里面自定义 drawerlayout.xml</p>
+<pre><code>&lt;android.support.v4.widget.DrawerLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+xmlns:app=&quot;http://schemas.android.com/apk/res-auto&quot;
+
+android:id=&quot;@+id/dl_left&quot;
+android:layout_width=&quot;match_parent&quot;
+android:layout_height=&quot;match_parent&quot;&gt;
+
+&lt;LinearLayout
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:orientation=&quot;vertical&quot;&gt;
+
+   &lt;include layout=&quot;@layout/toolbar&quot;/&gt;
+
+    &lt;FrameLayout
+        android:id=&quot;@+id/main_content&quot;
+        android:layout_width=&quot;match_parent&quot;
+        android:layout_height=&quot;match_parent&quot; /&gt;
+
+&lt;/LinearLayout&gt;
+
+    &lt;android.support.design.widget.NavigationView
+        android:id=&quot;@+id/navigation_view&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;match_parent&quot;
+        android:layout_gravity=&quot;start&quot;
+        android:background=&quot;@color/white&quot;
+        app:menu=&quot;@menu/drawer_menu&quot;
+        &gt;
+    &lt;/android.support.design.widget.NavigationView&gt;
+
+&lt;/android.support.v4.widget.DrawerLayout&gt;
+</code></pre><p>整个LinearLayout 是程序的主界面，首先用 include 表现导入 toolbar 然后创建显示内容的主页面，下面 NavigationView 是系统提供的，需要导入系统提供的库文件。用这个的目的是它可以更灵活的定义 drawerlayout 的界面，通过 addHeaderView() 方法可以插入自定义的布局文件。实现上面红色地方的效果。<br>下面贴出 app:menu=”@menu/drawer_menu” 这个的代码。</p>
+<pre><code>&lt;menu xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;&gt;
+&lt;group android:checkableBehavior=&quot;single&quot;&gt;
+    &lt;item
+        android:id=&quot;@+id/nav_keji&quot;
+        android:icon=&quot;@drawable/keji&quot;
+        android:checked=&quot;true&quot;
+
+        android:title=&quot;科技&quot; /&gt;
+    &lt;item
+        android:id=&quot;@+id/nav_yule&quot;
+        android:icon=&quot;@drawable/yule&quot;
+
+        android:title=&quot;娱乐&quot; /&gt;
+    &lt;item
+        android:id=&quot;@+id/nav_settings&quot;
+        android:icon=&quot;@drawable/setting&quot;
+
+        android:title=&quot;设置&quot; /&gt;
+&lt;/group&gt;
+&lt;item android:title=&quot;我的&quot;&gt;
+    &lt;menu&gt;
+        &lt;item
+            android:id=&quot;@+id/nav_personal&quot;
+            android:icon=&quot;@drawable/ic_menu_user&quot;
+            android:title=&quot;个人信息&quot; /&gt;
+        &lt;item
+            android:id=&quot;@+id/nav_favorite&quot;
+            android:icon=&quot;@drawable/ic_menu_favorite&quot;
+            android:title=&quot;我的收藏&quot; /&gt;
+    &lt;/menu&gt;
+&lt;/item&gt;
+&lt;/menu&gt;
+</code></pre><p>这个没什么好说的，就是对 Drawerlayout 中菜单项的定义。     </p>
+<p>以下是 navigation_header.xml 的代码，这段代码实现了 DrawerLayout 头部的效果。</p>
+<pre><code>LinearLayout xmlns:android=&quot;http://schemas.android.com/apk/res/android&quot;
+android:orientation=&quot;vertical&quot;
+android:layout_width=&quot;match_parent&quot;
+android:layout_height=&quot;180dp&quot;
+android:background=&quot;?attr/colorPrimary&quot;
+android:theme=&quot;@style/ThemeOverlay.AppCompat.Dark&quot;
+&gt;
+&lt;View
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;15dp&quot; /&gt;
+&lt;LinearLayout
+    android:layout_width=&quot;match_parent&quot;
+    android:layout_height=&quot;match_parent&quot;
+    android:gravity=&quot;center&quot;
+    android:orientation=&quot;vertical&quot;
+    android:padding=&quot;16dp&quot;&gt;
+
+    &lt;ImageView
+        android:id=&quot;@+id/navigation_header_view_avatar_iv&quot;
+        android:layout_width=&quot;72dp&quot;
+        android:layout_height=&quot;72dp&quot;
+        android:background=&quot;@mipmap/ic_launcher&quot;
+         /&gt;
+
+    &lt;TextView
+        android:id=&quot;@+id/navigation_header_view_name_tv&quot;
+        android:layout_width=&quot;wrap_content&quot;
+        android:layout_height=&quot;wrap_content&quot;
+        android:layout_marginTop=&quot;16dp&quot;
+        android:text=&quot;未登录&quot;
+        android:textAppearance=&quot;@style/TextAppearance.AppCompat.Body1&quot;
+        android:textSize=&quot;20sp&quot; /&gt;
+&lt;/LinearLayout&gt;
+
+&lt;/LinearLayout&gt;
+</code></pre><p>下面贴出主 Activity 的代码</p>
+<pre><code>public class MainActivity extends AppCompatActivity {
+
+private Toolbar toolbar;
+private DrawerLayout drawerLayout;
+private ActionBarDrawerToggle mDrawerToggle;
+private NavigationView mNavigationView;
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+
+    setContentView(R.layout.activity_main);
+
+    initView();
+}
+
+private void initView(){
+
+    toolbar = (Toolbar) findViewById(R.id.toolbar);
+    mNavigationView = (NavigationView) findViewById(R.id.navigation_view);
+    drawerLayout = (DrawerLayout) findViewById(R.id.dl_left);
+
+    toolbar.setTitle(&quot;界面&quot;);
+
+    setSupportActionBar(toolbar);
+    toolbar.setNavigationIcon(R.drawable.menu);
+
+    mDrawerToggle = new ActionBarDrawerToggle(this,drawerLayout,toolbar,R.string.open,R.string.close){
+        @Override
+        public void onDrawerOpened(View drawerView) {
+            super.onDrawerOpened(drawerView);
+        }
+
+        @Override
+        public void onDrawerClosed(View drawerView) {
+            super.onDrawerClosed(drawerView);
+        }
+    };
+    drawerLayout.setDrawerListener(mDrawerToggle);
+
+    setupDrawerContent(mNavigationView);
+}
+private void setupDrawerContent(NavigationView mNavigationView) {
+
+    View header = LayoutInflater.from(this).inflate(R.layout.navigation_header, null);
+
+    mNavigationView.addHeaderView(header);
+    mNavigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
+        @Override
+        public boolean onNavigationItemSelected(MenuItem menuItem) {
+            switch (menuItem.getItemId()){
+                case R.id.nav_keji:
+                    Toast.makeText(MainActivity.this,&quot;科技&quot;,Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_yule:
+                    Toast.makeText(MainActivity.this,&quot;娱乐&quot;,Toast.LENGTH_SHORT).show();
+                    break;
+                case R.id.nav_settings:
+                    Toast.makeText(MainActivity.this,&quot;设置&quot;,Toast.LENGTH_SHORT).show();
+                    break;
+            }
+            menuItem.setChecked(true);
+            drawerLayout.closeDrawers();
+            return true;
+        }
+    });
+}
+}
+</code></pre><p>上面代码中 ActionBarDrawerToggle 是一个开关，用于打开/关闭 DrawerLayout 抽屉。ActionBarDrawerToggle 提供了一个方便的方式来配合DrawerLayout和ActionBar，以实现推荐的抽屉功能。即点击ActionBar的home按钮，即可弹出DrawerLayout抽屉。 </p>
+<h3 id="注意"><a href="#注意" class="headerlink" title="# 注意"></a># 注意</h3><p>使用 Toolbar 要使用 NoActionBar 的主题，如果想要把 Toolbar 上的字变为白色，需为 Toolbar自定义 dark 的主题。</p>
+<p>这篇贴了一堆代码，因为实在没什么好说的，代码都很简单。如果有什么疑问，可以找我讨论。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/Design/" rel="tag"># Design</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/11/10/Serializable和Parcelable传递值对象/" rel="next" title="Serializable和Parcelable传递值对象">
+                <i class="fa fa-chevron-left"></i> Serializable和Parcelable传递值对象
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/11/30/怎样做一个新闻客户端/" rel="prev" title="怎样做一个新闻客户端">
+                怎样做一个新闻客户端 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#ToolBar"><span class="nav-number">1.</span> <span class="nav-text"># ToolBar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#DrawerLayout"><span class="nav-number">2.</span> <span class="nav-text"># DrawerLayout</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#注意"><span class="nav-number">3.</span> <span class="nav-text"># 注意</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

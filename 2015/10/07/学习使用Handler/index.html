@@ -1,0 +1,980 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="handler," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="本文是介绍Handler的用法，通过这篇文章你可以了解：  Handler是干什么用的 通过代码实例演示子线程更新UI 通过源码分析 Handler sendMessage发送消息又回调handleMessage 是怎样实现的 了解handler、MessageQueue、Looper的关系 HandlerThread是干什么用的  # 什么是Handler?接收子线程发送的数据，并用此数据配合主">
+<meta name="keywords" content="handler">
+<meta property="og:type" content="article">
+<meta property="og:title" content="学习使用Handler">
+<meta property="og:url" content="http://yoursite.com/2015/10/07/学习使用Handler/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="本文是介绍Handler的用法，通过这篇文章你可以了解：  Handler是干什么用的 通过代码实例演示子线程更新UI 通过源码分析 Handler sendMessage发送消息又回调handleMessage 是怎样实现的 了解handler、MessageQueue、Looper的关系 HandlerThread是干什么用的  # 什么是Handler?接收子线程发送的数据，并用此数据配合主">
+<meta property="og:locale" content="default">
+<meta property="og:updated_time" content="2018-09-09T13:26:38.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="学习使用Handler">
+<meta name="twitter:description" content="本文是介绍Handler的用法，通过这篇文章你可以了解：  Handler是干什么用的 通过代码实例演示子线程更新UI 通过源码分析 Handler sendMessage发送消息又回调handleMessage 是怎样实现的 了解handler、MessageQueue、Looper的关系 HandlerThread是干什么用的  # 什么是Handler?接收子线程发送的数据，并用此数据配合主">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/10/07/学习使用Handler/"/>
+
+
+
+
+
+  <title>学习使用Handler | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/10/07/学习使用Handler/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">学习使用Handler</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-10-07T20:46:18+08:00">
+                2015-10-07
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/Android/" itemprop="url" rel="index">
+                    <span itemprop="name">Android</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <p>本文是介绍Handler的用法，通过这篇文章你可以了解：</p>
+<ul>
+<li>Handler是干什么用的</li>
+<li>通过代码实例演示子线程更新UI</li>
+<li>通过源码分析 Handler sendMessage发送消息又回调handleMessage 是怎样实现的</li>
+<li>了解handler、MessageQueue、Looper的关系</li>
+<li>HandlerThread是干什么用的</li>
+</ul>
+<h3 id="什么是Handler"><a href="#什么是Handler" class="headerlink" title="# 什么是Handler?"></a># 什么是Handler?</h3><pre><code>接收子线程发送的数据，并用此数据配合主线程更新UI。
+</code></pre><p>解释：<br>Android 中更新UI是在主线程中进行的，其他线程不能更新UI（实际上如果没有thread.sleep()方法的话，在其他线程也是可以更新UI的，但是不建议这么做）。在主线程中执行一些耗时操作（如I/O大文件读写，网络下载）会使程序崩溃。Handler的出现就是解决这个问题的，Handler承担着子线程传过来的数据，把这些消息放入主线程队列中，配合主线程进行更新UI。</p>
+<p>Handler中分发消息的一些方法：</p>
+<ul>
+<li>post(Runnable)</li>
+<li>postAtTime(Runnable,long)</li>
+<li>postDelayed(Runnable long)</li>
+<li>sendEmptyMessage(int)</li>
+<li>sendMessage(Message)</li>
+<li>sendMessageAtTime(Message,long)</li>
+<li>sendMessageDelayed(Message,long)</li>
+</ul>
+<p>以上方法以post开头的允许你处理 Runnable 对象，sendMessage()允许你处理Message对象(Message可以包含数据)。</p>
+<h3 id="代码实例"><a href="#代码实例" class="headerlink" title="# 代码实例"></a># 代码实例</h3><p>下面这段代码，由于在子线程中睡眠1S，并更新UI，导致程序崩溃。</p>
+<pre><code>public class MainActivity extends Activity {
+
+private TextView textView;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    textView = (TextView) findViewById(R.id.textView);
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(1000);
+                //耗时操作导致程序崩溃 CalledFromWrongThreadException
+                textView.setText(&quot;new Thread&quot;);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }).start();
+ }
+}
+</code></pre><p>这时就需要Handler。</p>
+<pre><code>public class MainActivity extends Activity {
+
+private TextView textView;
+private Handler handler = new Handler(){
+    @Override
+    public void handleMessage(Message msg) {
+        super.handleMessage(msg);
+        String text = (String) msg.obj;
+        textView.setText(text);
+    }
+};
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    textView = (TextView) findViewById(R.id.textView);
+    new Thread(new Runnable() {
+        @Override
+        public void run() {
+            try {
+                Thread.sleep(2000);
+                Message message = handler.obtainMessage();
+                /**
+                获得Message的构造方法最好的方式是调用Message.obtain()    
+                和Handler.obtainMessage()方法。如果消息池中是空的，   
+                才会使用构造方法实例化一个新Message，这样有利于消息资源的利用。
+                */
+                message.obj = &quot;new Thread&quot;;
+                handler.sendMessage(message);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+    }).start();
+ }
+}
+</code></pre><p>下面这段代码是演示postDelayed()方法来每一秒切换一张图片，共三张图片。</p>
+<pre><code>public class MainActivity extends Activity {
+
+private ImageView imageView;
+private Handler handler = new Handler();
+private int Images[] = {R.drawable.image1,R.drawable.image2,R.drawable.image3};
+private int index;
+private myRunnable myRunnable = new myRunnable();
+class myRunnable implements Runnable{
+
+    @Override
+    public void run() {
+        index++;
+        index = index % 3;
+        imageView.setImageResource(Images[index]);
+        handler.postDelayed(myRunnable, 1000);
+    }
+}
+
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    setContentView(R.layout.activity_main);
+    imageView = (ImageView) findViewById(R.id.imageView);
+    handler.postDelayed(myRunnable, 1000);
+ }
+}
+</code></pre><h3 id="源码分析"><a href="#源码分析" class="headerlink" title="#源码分析"></a>#源码分析</h3><p>Handler sendMessage发送消息又回调handleMessage 是怎样实现的？下面通过源码进行分析。</p>
+<pre><code>public final boolean sendMessage(Message msg)
+{
+    return sendMessageDelayed(msg, 0);
+}
+</code></pre><p>-&gt;进入sendMessageDelayed();</p>
+<pre><code>public final boolean sendMessageDelayed(Message msg, long delayMillis)
+{
+    if (delayMillis &lt; 0) {
+        delayMillis = 0;
+    }
+    return sendMessageAtTime(msg, SystemClock.uptimeMillis() + delayMillis);
+}
+</code></pre><p>-&gt;进入sendMessageAtTime();</p>
+<pre><code>public boolean sendMessageAtTime(Message msg, long uptimeMillis) {
+    MessageQueue queue = mQueue;
+    //通过当前线程拿到MessageQueue对象
+    if (queue == null) {
+        RuntimeException e = new RuntimeException(
+                this + &quot; sendMessageAtTime() called with no mQueue&quot;);
+        Log.w(&quot;Looper&quot;, e.getMessage(), e);
+        return false;
+    }
+    return enqueueMessage(queue, msg, uptimeMillis);
+}
+</code></pre><p>-&gt;进入enqueueMessage();</p>
+<pre><code>private boolean enqueueMessage(MessageQueue queue, Message msg, long uptimeMillis) {
+    msg.target = this;
+    //target即发送目标，这里是handler自己
+    if (mAsynchronous) {
+        msg.setAsynchronous(true);
+    }
+    return queue.enqueueMessage(msg, uptimeMillis);
+    //这里是把消息放到消息队列中
+}
+</code></pre><p>到了这一步，可以看到已经把消息放到消息队列中，然后查看Looper.loop方法，看消息是怎样轮循的。</p>
+<pre><code>public static void loop() {
+    final Looper me = myLooper();
+    //通过myLooper对象得到一个Looper
+    if (me == null) {
+        throw new RuntimeException(&quot;No Looper; Looper.prepare() wasn&apos;t called on this thread.&quot;);
+    }
+    final MessageQueue queue = me.mQueue;
+    //通过Looper取出MessageQueue即消息队列
+
+    // Make sure the identity of this thread is that of the local process,
+    // and keep track of what that identity token actually is.
+    Binder.clearCallingIdentity();
+    final long ident = Binder.clearCallingIdentity();
+    //这里是核心代码，死循环，如果Message为空，就return
+    for (;;) {
+        Message msg = queue.next(); // might block
+        if (msg == null) {
+            // No message indicates that the message queue is quitting.
+            return;
+        }
+
+        // This must be in a local variable, in case a UI event sets the logger
+        Printer logging = me.mLogging;
+        if (logging != null) {
+            logging.println(&quot;&gt;&gt;&gt;&gt;&gt; Dispatching to &quot; + msg.target + &quot; &quot; +
+                    msg.callback + &quot;: &quot; + msg.what);
+        }
+
+        msg.target.dispatchMessage(msg);
+        //如果不为空，则调用handler的dispatchMessage方法
+        if (logging != null) {
+            logging.println(&quot;&lt;&lt;&lt;&lt;&lt; Finished to &quot; + msg.target + &quot; &quot; + msg.callback);
+        }
+
+        // Make sure that during the course of dispatching the
+        // identity of the thread wasn&apos;t corrupted.
+        final long newIdent = Binder.clearCallingIdentity();
+        if (ident != newIdent) {
+            Log.wtf(TAG, &quot;Thread identity changed from 0x&quot;
+                    + Long.toHexString(ident) + &quot; to 0x&quot;
+                    + Long.toHexString(newIdent) + &quot; while dispatching to &quot;
+                    + msg.target.getClass().getName() + &quot; &quot;
+                    + msg.callback + &quot; what=&quot; + msg.what);
+        }
+
+        msg.recycleUnchecked();
+    }
+}
+</code></pre><p>它调用了handler的dispatchMessage方法，下面我们再去看看这个方法。</p>
+<pre><code>public void dispatchMessage(Message msg) {
+    if (msg.callback != null) {
+        handleCallback(msg);
+    } else {
+        if (mCallback != null) {
+            if (mCallback.handleMessage(msg)) {
+                //callback里面handleMessage方法如果返回true则拦截
+                return;
+            }
+        }
+        handleMessage(msg);
+        //它最终调用了handlerMessage方法，这是关键所在，到这一步我们就知道它的工作原理了。
+    }
+}
+</code></pre><p>总结：<br>1.handler负责发送消息。<br>2.Looper负责接收handler发送的消息，并直接把消息回传给handler自己。<br>3.MessageQueue就是一个存储消息的容器。<br>4.在ActivityThread中默认创建一个main线程，在创建main线程过程中会创建Looper,在创建Looper过程中会创建MessageQueue。</p>
+<h3 id="HandlerThread是干什么的"><a href="#HandlerThread是干什么的" class="headerlink" title="#HandlerThread是干什么的"></a>#HandlerThread是干什么的</h3><p>HandlerThread 是用来解决多线程空指针的问题的，例如下面这个例子。</p>
+<pre><code>public class MainActivity extends Activity {
+
+class MyThread extends Thread{
+    public Handler handler;
+    public Looper looper;
+    @Override
+    public void run() {
+        Looper.prepare();
+        looper = Looper.myLooper();
+        handler = new Handler(){
+            @Override
+            public void handleMessage(Message msg) {
+                System.out.println(&quot;Thread----------&gt;&quot;+Thread.currentThread());
+            }
+        };
+        Looper.loop();
+    }
+}
+private MyThread thread;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    TextView textView = new TextView(this);
+    textView.setText(&quot;hello Thread&quot;);
+    setContentView(textView);
+    thread = new MyThread();
+    thread.start();
+    handler = new Handler(thread.looper){
+    //上面的thread.looper所在的线程可能还没启动
+        @Override
+       public void handleMessage(Message msg) {
+            System.out.println(&quot;Thread----------&gt;&quot;+Thread.currentThread());
+        }
+    };
+    thread.handler.sendEmptyMessage(1);
+}
+}
+</code></pre><p>这样的话就会出现空指针，因为looper被创建的那个线程可能还没有开启。这个时候用HandlerThread就可以解决这个问题。如下：</p>
+<pre><code>public class MainActivity extends Activity {
+private HandlerThread thread;
+private Handler handler;
+@Override
+protected void onCreate(Bundle savedInstanceState) {
+    super.onCreate(savedInstanceState);
+    TextView textView = new TextView(this);
+    textView.setText(&quot;hello HandlerThread&quot;);
+    setContentView(textView);
+    thread = new HandlerThread(&quot;handler thread&quot;);
+    thread.start();
+    handler = new Handler(thread.getLooper()){
+    //在thread.getLooper()中加了同步，所以避免了多线程出现的空指针。
+        @Override
+        public void handleMessage(Message msg) {
+            System.out.println(&quot;Thread----------&gt;&quot;+Thread.currentThread());
+        }
+    };
+    handler.sendEmptyMessage(1);
+}
+}
+</code></pre>
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/handler/" rel="tag"># handler</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/09/25/Fragment基本用法/" rel="next" title="Fragment基本用法">
+                <i class="fa fa-chevron-left"></i> Fragment基本用法
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/10/21/Volley的基本用法/" rel="prev" title="Volley的基本用法解析">
+                Volley的基本用法解析 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是Handler"><span class="nav-number">1.</span> <span class="nav-text"># 什么是Handler?</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#代码实例"><span class="nav-number">2.</span> <span class="nav-text"># 代码实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#源码分析"><span class="nav-number">3.</span> <span class="nav-text">#源码分析</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#HandlerThread是干什么的"><span class="nav-number">4.</span> <span class="nav-text">#HandlerThread是干什么的</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>

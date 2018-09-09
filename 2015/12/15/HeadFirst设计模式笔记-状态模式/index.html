@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next pisces use-motion" lang="">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.4" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.4">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.4">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.4" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="设计模式," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="什么是状态模式定义：状态模式允许对象在内部状态改变时改变它的行为，对象看起来好像修改了它的类。 简单的说就是把状态封装成单独的类，并将动作委托到代表当前状态的对象  上面的就是状态模式的类图，它跟策略模式很像，可以回想策略模式来理解状态模式。它们都是通过对象的组合实现动态的改变行为。 什么时候使用状态模式不使用状态模式的时候，我们会定义一些静态变量，为这些变量赋值不同的数字，来表示各个状态。这样的">
+<meta name="keywords" content="设计模式">
+<meta property="og:type" content="article">
+<meta property="og:title" content="HeadFirst设计模式笔记-状态模式">
+<meta property="og:url" content="http://yoursite.com/2015/12/15/HeadFirst设计模式笔记-状态模式/index.html">
+<meta property="og:site_name" content="Hexo">
+<meta property="og:description" content="什么是状态模式定义：状态模式允许对象在内部状态改变时改变它的行为，对象看起来好像修改了它的类。 简单的说就是把状态封装成单独的类，并将动作委托到代表当前状态的对象  上面的就是状态模式的类图，它跟策略模式很像，可以回想策略模式来理解状态模式。它们都是通过对象的组合实现动态的改变行为。 什么时候使用状态模式不使用状态模式的时候，我们会定义一些静态变量，为这些变量赋值不同的数字，来表示各个状态。这样的">
+<meta property="og:locale" content="default">
+<meta property="og:image" content="http://i12.tietuku.com/9e0372ee7183a393.png">
+<meta property="og:updated_time" content="2018-09-09T13:31:59.000Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="HeadFirst设计模式笔记-状态模式">
+<meta name="twitter:description" content="什么是状态模式定义：状态模式允许对象在内部状态改变时改变它的行为，对象看起来好像修改了它的类。 简单的说就是把状态封装成单独的类，并将动作委托到代表当前状态的对象  上面的就是状态模式的类图，它跟策略模式很像，可以回想策略模式来理解状态模式。它们都是通过对象的组合实现动态的改变行为。 什么时候使用状态模式不使用状态模式的时候，我们会定义一些静态变量，为这些变量赋值不同的数字，来表示各个状态。这样的">
+<meta name="twitter:image" content="http://i12.tietuku.com/9e0372ee7183a393.png">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Pisces',
+    version: '5.1.4',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: 'Author'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://yoursite.com/2015/12/15/HeadFirst设计模式笔记-状态模式/"/>
+
+
+
+
+
+  <title>HeadFirst设计模式笔记-状态模式 | Hexo</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="default">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">Hexo</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            Home
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-archives">
+          <a href="/archives/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-archive"></i> <br />
+            
+            Archives
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/12/15/HeadFirst设计模式笔记-状态模式/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="John Doe">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Hexo">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">HeadFirst设计模式笔记-状态模式</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">Posted on</span>
+              
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-15T15:46:36+08:00">
+                2015-12-15
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+            <span class="post-category" >
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/设计模式/" itemprop="url" rel="index">
+                    <span itemprop="name">设计模式</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+          
+
+          
+          
+
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h3 id="什么是状态模式"><a href="#什么是状态模式" class="headerlink" title="什么是状态模式"></a>什么是状态模式</h3><p>定义：状态模式允许对象在内部状态改变时改变它的行为，对象看起来好像修改了它的类。</p>
+<p>简单的说就是把状态封装成单独的类，并将动作委托到代表当前状态的对象</p>
+<p><img src="http://i12.tietuku.com/9e0372ee7183a393.png" alt="类图"></p>
+<p>上面的就是状态模式的类图，它跟策略模式很像，可以回想策略模式来理解状态模式。它们都是通过对象的组合实现动态的改变行为。</p>
+<h3 id="什么时候使用状态模式"><a href="#什么时候使用状态模式" class="headerlink" title="什么时候使用状态模式"></a>什么时候使用状态模式</h3><p>不使用状态模式的时候，我们会定义一些静态变量，为这些变量赋值不同的数字，来表示各个状态。这样的方法如果需要增加状态是非常不方便的。状态模式可以使状态之间解耦，可以随时创建新的状态，只要实现共同的接口。</p>
+<h3 id="举个例子"><a href="#举个例子" class="headerlink" title="举个例子"></a>举个例子</h3><p>下面这个例子是关于自动售卖机的，它有如下几个状态</p>
+<ul>
+<li>没投币</li>
+<li>已投币</li>
+<li>售罄</li>
+<li>投币之后出货状态</li>
+</ul>
+<p>这些状态都有统一的接口，实现统一的方法，只是实现各有不同。然后通过setState()方法动态的转换状态。</p>
+<p>下面是统一的接口</p>
+<pre><code>public interface State {
+    public void insertQuarter();//投币
+    public void ejectQuarter();//退币
+    public void turnCrank();//摇杆
+    public void dispense();//出货
+}    
+</code></pre><p>没币的状态</p>
+<pre><code>public class NoQuarterState implements State{
+
+    GumballMachine gumballMachine;
+
+    public NoQuarterState(GumballMachine gumballMachine){
+        this.gumballMachine = gumballMachine;
+    }
+
+    @Override
+    public void dispense() {
+        System.out.println(&quot;You need to pay fitst&quot;);
+    }
+
+    @Override
+    public void ejectQuarter() {
+        System.out.println(&quot;You haven&apos;t inserted a quarter&quot;);
+    }
+
+    @Override
+    public void insertQuarter() {
+        System.out.println(&quot;You inserted a quarter&quot;);
+        gumballMachine.setState(gumballMachine.getHasQuarterState());
+    }
+
+    @Override
+    public void turnCrank() {
+        System.out.println(&quot;You turned,but there&apos;s no quarter&quot;);
+    }
+}
+</code></pre><p>有币的状态</p>
+<pre><code>public class HasQuarterState implements State{
+
+    GumballMachine gumballMachine;
+    public HasQuarterState(GumballMachine gumballMachine){
+        this.gumballMachine = gumballMachine;
+    }
+    @Override
+    public void dispense() {
+        //System.out.println(&quot;No gumball dispensed&quot;);
+        //这个方法在这里没什么用
+    }
+
+    @Override
+    public void ejectQuarter() {
+        System.out.println(&quot;Quarter returned&quot;);
+        gumballMachine.setState(gumballMachine.getSoldState());
+    }
+
+    @Override
+    public void insertQuarter() {
+        System.out.println(&quot;You can&apos;t insert another quarter&quot;);
+    }
+
+    @Override
+    public void turnCrank() {
+        System.out.println(&quot;You turned...&quot;);
+        gumballMachine.setState(gumballMachine.getSoldState());
+    }
+
+}
+</code></pre><p>售罄状态</p>
+<pre><code>public class SoldOutState implements State{
+
+    GumballMachine gumballMachine;
+    public SoldOutState(GumballMachine gumballMachine){
+        this.gumballMachine = gumballMachine;
+    }
+    @Override
+    public void dispense() {
+        System.out.println(&quot;Sorry,no gumballs dispense&quot;);
+    }
+
+    @Override
+    public void ejectQuarter() {
+        System.out.println(&quot;Sorry,You can&apos;t eject,you haven&apos;t inserted a quarter yet&quot;);
+
+    }
+
+    @Override
+    public void insertQuarter() {
+        System.out.println(&quot;Sorry,you can&apos;t insert a quarter,the machine is sold out&quot;);
+    }
+
+    @Override
+    public void turnCrank() {
+        System.out.println(&quot;Sorry,there are no gumballs&quot;);
+    }
+}
+</code></pre><p>出货状态</p>
+<pre><code>public class SoldState implements State{
+
+    GumballMachine gumballMachine;
+    public SoldState(GumballMachine gumballMachine){
+        this.gumballMachine = gumballMachine;
+    }
+    @Override
+    public void dispense() {
+        gumballMachine.releaseBall();
+        if(gumballMachine.getCount()&gt;0){
+            gumballMachine.setState(gumballMachine.getNoQuarterState());
+        }else{
+            System.out.println(&quot;Oops,out of gumballs&quot;);
+            gumballMachine.setState(gumballMachine.getSoldOutState());
+        }
+    }
+
+    @Override
+    public void ejectQuarter() {
+        System.out.println(&quot;you already turned the crank&quot;);
+    }
+
+    @Override
+    public void insertQuarter() {
+        System.out.println(&quot;please wait,we&apos;re already giving you a gumball&quot;);
+    }
+
+    @Override
+    public void turnCrank() {
+        System.out.println(&quot;Turning twice doesn&apos;t get you another gumball&quot;);
+    }
+}
+</code></pre><p>售卖机的类</p>
+<pre><code>public class GumballMachine {
+
+    State noQuarterState;
+    State hasQuarterState;
+    State soldState;
+    State soldOutState;
+
+    State state = soldOutState;
+    int count = 0;
+
+    public GumballMachine(int numberGumballs) {
+        noQuarterState = new NoQuarterState(this);
+        hasQuarterState = new HasQuarterState(this);
+        soldState = new SoldState(this);
+        soldOutState = new SoldOutState(this);
+        this.count = numberGumballs;
+        if(numberGumballs&gt;0){
+            state = noQuarterState;
+        }
+    }
+
+    public void setState(State state) {
+        this.state = state;
+    }
+    public void insertQuarter(){
+        state.insertQuarter();
+    }
+    public void ejectQuarter(){
+        state.ejectQuarter();
+    }
+    public void turnCrank(){
+        state.turnCrank();
+        state.dispense();
+    }
+
+    public void releaseBall(){
+        System.out.println(&quot;A gumball comes rolling out the slot...&quot;);
+        if(count!=0){
+            count = count-1;
+        }
+    }
+
+    public State getNoQuarterState() {
+        return noQuarterState;
+    }
+
+    public State getHasQuarterState() {
+        return hasQuarterState;
+    }
+
+    public State getSoldState() {
+        return soldState;
+    }
+
+    public State getSoldOutState() {
+        return soldOutState;
+    }
+
+    public int getCount() {
+        return count;
+    }
+}
+</code></pre><p>售卖机类里持有所有状态的引用，内部转换状态通过setState()方法，然后通过被动态设置的state调用相应的方法。</p>
+<p>测试类</p>
+<pre><code>public class GumballMachineTest {
+    public static void main(String[] args) {
+        GumballMachine gumballMachine = new GumballMachine(5);
+        gumballMachine.insertQuarter();
+        gumballMachine.turnCrank();
+        gumballMachine.insertQuarter();
+        gumballMachine.ejectQuarter();
+        gumballMachine.ejectQuarter();
+    }
+}
+</code></pre><p>结果：</p>
+<pre><code>You turned...
+A gumball comes rolling out the slot...
+You inserted a quarter
+Quarter returned
+you already turned the crank
+</code></pre><h3 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h3><p>通过策略模式理解状态模式就很好理解了，它们基本是一样的，只是意图不同。那么，它们究竟是怎么的不同，怎么区分它们。<br>策略模式要做的是定义一些策略，让他的对象去使用。想想鸭子那个例子，它让那些行为组合起来表示的是一个整体，一只完整的鸭子。而鸭子的属性是固定的，被固定好就不会改变。而状态模式定义的就是一些状态，它会随时动态的改变，也就是说，使用状态模式就是要不断的改变行为，这是它的初衷。</p>
+
+      
+    </div>
+    
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/设计模式/" rel="tag"># 设计模式</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2015/12/14/HeadFirst设计模式笔记-组合模式/" rel="next" title="HeadFirst设计模式笔记-组合模式">
+                <i class="fa fa-chevron-left"></i> HeadFirst设计模式笔记-组合模式
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2015/12/16/HeadFirst设计模式笔记-代理模式/" rel="prev" title="HeadFirst设计模式笔记-代理模式">
+                HeadFirst设计模式笔记-代理模式 <i class="fa fa-chevron-right"></i>
+              </a>
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            Table of Contents
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            Overview
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <p class="site-author-name" itemprop="name">John Doe</p>
+              <p class="site-description motion-element" itemprop="description"></p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives/">
+              
+                  <span class="site-state-item-count">23</span>
+                  <span class="site-state-item-name">posts</span>
+                </a>
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-categories">
+                
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                
+              </div>
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">12</span>
+                  <span class="site-state-item-name">tags</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#什么是状态模式"><span class="nav-number">1.</span> <span class="nav-text">什么是状态模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#什么时候使用状态模式"><span class="nav-number">2.</span> <span class="nav-text">什么时候使用状态模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#举个例子"><span class="nav-number">3.</span> <span class="nav-text">举个例子</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#总结"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <div class="copyright">&copy; <span itemprop="copyrightYear">2018</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">John Doe</span>
+
+  
+</div>
+
+
+  <div class="powered-by">Powered by <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a></div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Pisces</a> v5.1.4</div>
+
+
+
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+  
+
+  
+  
+    <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+  
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.4"></script>
+
+
+
+  
+  
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.4"></script>
+
+
+
+  
+
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
