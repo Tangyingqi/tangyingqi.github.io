@@ -81,7 +81,7 @@
 
 <meta property="og:type" content="website">
 <meta property="og:title" content="Hexo">
-<meta property="og:url" content="http://yoursite.com/index.html">
+<meta property="og:url" content="http://yoursite.com/categories/Android/index.html">
 <meta property="og:site_name" content="Hexo">
 <meta property="og:locale" content="default">
 <meta name="twitter:card" content="summary">
@@ -115,13 +115,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/"/>
+  <link rel="canonical" href="http://yoursite.com/categories/Android/"/>
 
 
 
 
 
-  <title>Hexo</title>
+  <title>Category: Android | Hexo</title>
   
 
 
@@ -140,8 +140,7 @@
     
   
 
-  <div class="container sidebar-position-left 
-  page-home">
+  <div class="container sidebar-position-left ">
     <div class="headband"></div>
 
     <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
@@ -214,237 +213,56 @@
         <div class="content-wrap">
           <div id="content" class="content">
             
-  <section id="posts" class="posts-expand">
-    
+
+  
+  
+  
+  <div class="post-block category">
+
+    <div id="posts" class="posts-collapse">
+      <div class="collection-title">
+        <h1>Android<small>Category</small>
+        </h1>
+      </div>
+
       
-
-  
-
-  
-  
-  
+        
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-  
-  
-  
-  <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2015/12/18/高性能的数据库框架-greenDAO/">
+    <header class="post-header">
 
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
-      <meta itemprop="description" content="">
-      <meta itemprop="image" content="/images/avatar.gif">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
-    </span>
-
-    
-      <header class="post-header">
-
+      <h2 class="post-title">
         
+            <a class="post-title-link" href="/2015/12/18/高性能的数据库框架-greenDAO/" itemprop="url">
+              
+                <span itemprop="name">高性能的数据库框架-greenDAO</span>
+              
+            </a>
         
-          <h1 class="post-title" itemprop="name headline">
-                
-                <a class="post-title-link" href="/2015/12/18/高性能的数据库框架-greenDAO/" itemprop="url">高性能的数据库框架-greenDAO</a></h1>
-        
+      </h2>
 
-        <div class="post-meta">
-          <span class="post-time">
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-calendar-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">Posted on</span>
-              
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2015-12-18T15:59:10+08:00">
-                2015-12-18
-              </time>
-            
+      <div class="post-meta">
+        <time class="post-time" itemprop="dateCreated"
+              datetime="2015-12-18T15:59:10+08:00"
+              content="2015-12-18" >
+          12-18
+        </time>
+      </div>
 
-            
+    </header>
+  </article>
 
-            
-          </span>
 
-          
-            <span class="post-category" >
-            
-              <span class="post-meta-divider">|</span>
-            
-              <span class="post-meta-item-icon">
-                <i class="fa fa-folder-o"></i>
-              </span>
-              
-                <span class="post-meta-item-text">In</span>
-              
-              
-                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
-                  <a href="/categories/Android/" itemprop="url" rel="index">
-                    <span itemprop="name">Android</span>
-                  </a>
-                </span>
-
-                
-                
-              
-            </span>
-          
-
-          
-            
-          
-
-          
-          
-
-          
-
-          
-
-          
-
-        </div>
-      </header>
-    
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-
-      
-      
-
-      
-        
-          
-            <h3 id="关于greenDAO"><a href="#关于greenDAO" class="headerlink" title="关于greenDAO"></a>关于greenDAO</h3><p>greenDAO是一个将对象映射到SQLite数据库中的轻量且快速的ORM解决方案，它性能是目前最好的，且内存开销小。其他框架因为注解的原因，性能不如greenDAO。</p>
-<h3 id="使用greenDAO"><a href="#使用greenDAO" class="headerlink" title="使用greenDAO"></a>使用greenDAO</h3><p>一.在Android工程中配置GreenDao Generator</p>
-<p>在main目录下新建一个目录java-gen,用于存放greenDAO自动生成的Bean、Dao、DaoMaster、DaoSession</p>
-<p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967488134646.png" alt=""></p>
-<p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967488110019.png" alt=""></p>
-<p>配置build.gradle</p>
-<p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967489561349.png" alt=""></p>
-<p>在Android里面添加如下代码</p>
-<pre><code>sourceSets{
-    main{
-        java.srcDirs =[&apos;src/main/java&apos;,&apos;src/main/java-gen&apos;]
-    }
-}
-</code></pre><p>在dependencies里面添加如下代码</p>
-<pre><code>compile &apos;de.greenrobot:greendao:1.3.7&apos;
-</code></pre><p>二.新建GreenDao Generator模块，新建Module</p>
-<p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967489104631.png" alt=""></p>
-<p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967490104007.png" alt=""></p>
-<p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967490123204.png" alt=""></p>
-<p>配置daoexamplegenerator 工程的build.gradle,添加dependencies</p>
-<p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967491833654.png" alt=""></p>
-<p>编写自动生成的DaoGenerator类，我的是MyDaoGenerator，这个名字可以自己起，在创建的时候，最好不要用DaoGenerator这个名字，会有冲突。</p>
-<pre><code>public class MyDaoGenerator {
-
-public static void main(String[] args)throws Exception{
-    //两个参数分别代表：数据库版本号，自动代码生成所在的包名
-    Schema schema = new Schema(1,&quot;com.tyq.greendao&quot;);
-
-    addData(schema);
-
-    //使用DaoGenerator的generateAll方法自动生成代码，会放入第二个参数的路径中
-    new DaoGenerator().generateAll(schema,&quot;/Android Sample/AccountBook/app/src/main/java-gen&quot;);
-
-}
-
-private static void addData(Schema schema){
-    //一个实体类就代表一张表，此处表名为Person
-    Entity person = schema.addEntity(&quot;Person&quot;);
-
-    //生成表的字段
-    person.addIdProperty();
-    person.addStringProperty(&quot;name&quot;);
-    person.addStringProperty(&quot;money&quot;);
-}
-}
-</code></pre><p>经过上面的步骤，你可以执行generator工程，如果一切都对了，会在java-gen里生成四个类文件，并且控制台会看到如下</p>
-<p><img src="http://www.jcodecraeer.com/uploads/20150727/1437967491555755.png" alt=""></p>
-<p>下面你就可以在自己的工程中使用greenDao了，在使用GreenDao的时候，你需要先做一些初始化的操作。</p>
-<pre><code>private void setUpDatabase() {
-    //通过DaoMaster的内部类DevOpenHelper，可以获得一个SqliteOpenHelper对象
-    //注意：默认的DaoMaster.DevOpenHelper会在数据库升级时，删除所有表
-    DaoMaster.DevOpenHelper helper = new DaoMaster.DevOpenHelper(this, &quot;person-db&quot;, null);
-
-    db = helper.getWritableDatabase();
-
-    daoMaster = new DaoMaster(db);
-    daoSession = daoMaster.newSession();
-
-}
-
-private PersonDao getPersonDao() {
-    return daoSession.getPersonDao();
-}
-</code></pre><ul>
-<li>DaoMaster:</li>
-</ul>
-<p>daomaster以一定模式持有数据库对象(SQLiteDatabase)，并管理一些Dao类，有一个静态方法创建和drop数据库表，它的内部类OpenHelper和DevOpenHelper是SQLiteOpenHelper的实现类，用于创建SQLite数据库的模式。</p>
-<ul>
-<li>DaoSession：</li>
-</ul>
-<p>管理指定模式下所有可用的DAO对象，你可以通过某个get方法获取到。DaoSession提供一些通用的持久化方法，比如对实体进行插入，加载，更新，刷新和删除。</p>
-<p>在其他地方调用getPersonDao()就可以使用增删改查了。</p>
-<pre><code>getPersonDao().insert(person);//插入
-getPersonDao().deleteByKey(id);//删除
-list = getPersonDao().queryBuilder()
-.where(PersonDao.Properties.Name.like(&quot;%&quot; + et_search_name.getText().toString() + &quot;%&quot;))
-.list();//查询
-</code></pre><p>查询需要注意，返回的是List，我在适配数据的时候，自己写了一个适配器，把list传过去，然后设置。</p>
-<p>模糊查询跟SQLite一样，可以加 % 控制，调用like()方法。</p>
-<h3 id="例子"><a href="#例子" class="headerlink" title="例子"></a>例子</h3><p>我第一个写的小App就是用Sqlite简单的增删改查，非常简单，最近学习了GreenDao，就把他重写了一遍，放在GitHub上了，有兴趣的可以去看看。</p>
-<p>参考文章：</p>
-<ul>
-<li><a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2015/0727/3223.html" target="_blank" rel="noopener">ORM 框架之 greenDAO 使用心得</a></li>
-<li><a href="http://www.jcodecraeer.com/a/anzhuokaifa/androidkaifa/2014/1127/2069.html" target="_blank" rel="noopener">GreenDao官方文档翻译</a></li>
-</ul>
-
-          
-        
       
     </div>
-    
-    
-    
 
-    
-
-    
-
-    
-
-    <footer class="post-footer">
-      
-
-      
-
-      
-
-      
-      
-        <div class="post-eof"></div>
-      
-    </footer>
   </div>
   
   
   
-  </article>
-
-
-    
-  </section>
 
   
+
 
 
           </div>
