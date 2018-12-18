@@ -3,17 +3,17 @@
   "name": "nostalgia",
   "icons": [
     {
-      "src": "/public/images/icons/launcher-icon-128x128.png",
+      "src": "/public/images/icons/launcher-icon-128x128.jpeg",
       "type": "image/png",
       "sizes": "128x128"
     },
     {
-      "src": "/public/images/icons/launcher-icon-152x152.png",
+      "src": "/public/images/icons/launcher-icon-152x152.jpeg",
       "type": "image/png",
       "sizes": "152x152"
     },
     {
-      "src": "/public/images/icons/launcher-icon-192x192.png",
+      "src": "/public/images/icons/launcher-icon-192x192.jpeg",
       "type": "image/png",
       "sizes": "192x192"
     }
