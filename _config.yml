@@ -1,0 +1,44 @@
+# Permalinks
+permalink:        /post/:title.html
+
+# Setup
+url:              http://www.tangyingqi.cn
+img_url:          https://infp.github.io/images
+
+# Set to '' in case of hosting on `https://<your-github-name>.github.io`
+baseurl:          ''
+
+title:            nostalgia
+
+# Markdown enabled, however don't use more than one paragraph (enforced by `>`)
+description:      >
+  about my [code](https://tangyingqi.github.io/code/) and [life](https://tangyingqi.github.io/life/).
+# Google Analytics tracking ID
+#analytics:        'UA-32028925-2'
+
+# Fallback image and color if not overwritten for tag or post
+image:            /public/images/hedin.jpg
+color:            '#dc322f'
+
+author:
+  name:           ‘唐英淇’
+  email:          tangyingqi1994@gmail.com
+  github:         Tangyingqi
+  weibo:          1763497687
+  photo:          /public/images/avatar.jpeg
+
+
+  # Markdown enabled, can use multiple paragraphs (enabled by `|`)
+  about:          |
+   
+
+
+compress_html:
+  clippings:      all
+  comments:       ["<!--", "-->"]
+  endings:        all
+  startings:      [html, head, body]
+
+sass:
+  sass_dir:       /public/css
+  style:          compressed
