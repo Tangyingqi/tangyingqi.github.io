@@ -1,3 +1,8 @@
+---
+layout: post
+title: 'PriorityQueue    源码分析'
+tags: [code]
+---
 
 创建 PriorityQueue 有多种构造方法，其中可以传入 initialCapacity（如果不传入默认是 11）或 Comparator<? super E> comparator，用于比较元素。还可以传入已有的集合元素。
 
